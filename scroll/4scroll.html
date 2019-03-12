@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Document</title>
+<style>
+    *{padding:0;margin:0}
+.content{
+    height:3000px;
+}
+</style>
+</head>
+<body>
+    <div class="content">
+        页面
+    </div>
+<script>
+// 抽离计算页面高度，加载更多逻辑
+function more(t){
+    console.log(t)
+    console.log(this)
+    console.log("执行频率测试")
+    // 页面总高度:
+    var pageHeight = document.body.scrollHeight;
+    // 显示器高度;
+    var screenHeight = document.documentElement.clientHeight;
+    // 页面被滚动条卷入的高度
+    var scrollHeight = document.documentElement.scrollTop
+    if(scrollHeight+screenHeight>=pageHeight){
+        console.log("加载更多");
+    }
+}
+
+function debounce(more){
+    var timeout= null;
+    return function(){
+        // 获取事件对象中
+        let event = arguments[0];
+        // 获取this指向
+        var context = this;
+    // 判断是否启动了延时器;
+   if(!timeout){
+    //    未启动，开启延时器
+       timeout = setTimeout(function(){
+        //    绑定this指向，并传递事件对象
+           more.call(context,event)
+       },600)
+   }else{
+    //    已经启动,清除延时器,重新计时
+       clearTimeout(timeout);
+       timeout=null;
+       timeout = setTimeout(function(){
+            //    绑定this指向，并传递事件对象
+           more.call(context,event)
+       },600)
+   }
+}    
+}
+
+document.onscroll = debounce(more)
+</script>
+</body>
+</html>

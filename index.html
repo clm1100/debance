@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<script>
+// var foo = {
+//     value: 1
+// }
+// Function.prototype.myCall = function(context) {
+//   if (typeof this !== 'function') {
+//     throw new TypeError('Error')
+//   }
+//   console.log(context);
+//   context = context || window
+//   context.fn = this
+//   const args = [...arguments].slice(1)
+//   const result = context.fn(...args)
+//   delete context.fn
+//   return result
+// }
+
+
+// function bar (t){
+//     console.log(this.value);
+//     console.log(t);
+// }
+
+
+// bar.myCall(foo,123)
+
+
+
+// Function.prototype.myApply = function(context) {
+
+//   context = context || window
+//   context.fn = this
+//   let result
+//     // myApply的参数形式为(obj,[arg1,arg2,arg3]);
+//     //   所以myApply的第二个参数为[arg1,arg2,arg3]
+//     // 这里我们用扩展运算符来处理一下参数的传入方式
+//   if (arguments[1]) {
+//     result = context.fn(...arguments[1])
+//   } else {
+//     result = context.fn()
+//   }
+//   delete context.fn
+//   return result
+// }
+
+// Function.prototype.myBind = function(ctx) {
+//     return () => { // 要用箭头函数，否则 this 指向错误
+//         return this.call(ctx)
+//     }
+// }
+// var obj = {a:1};
+// function bar(){
+//     console.log(this.a);
+// }
+// bar.myBind(obj)();
+
+
+
+
+// Function.prototype.myBind = function(ctx, ...argv1) {
+//     return (...argv2) => {
+//         return this.call(ctx, ...argv1, ...argv2)
+//     }
+// }
+// var obj = {a:1};
+// function bar(b,c){
+//     console.log(this.a+b+c);
+// }
+// bar.myBind(obj)(20,30);
+// bar.myBind(obj,20,30)();
+
+
+function deepClone(obj) {
+    return new Promise(resolve => {
+      var channel = new MessageChannel()
+      channel.port2.onmessage = ev => resolve(ev.data)
+      channel.port1.postMessage(obj)
+    })
+  }
+  
+  var obj = {
+    a: 1,
+    b: {
+      c: 2
+    }
+  }
+// 添加一个循环引用;
+  obj.z = obj;
+//再添加一个循环引用;
+  obj.b.d = obj.b
+  
+  // 注意该方法是异步的
+  // 可以处理 undefined 和循环引用对象
+  const test = async () => {
+    const clone = await deepClone(obj)
+    console.log(clone)
+  }
+  test()
+
+
+
+
+
+
+
+
+
+
+
+</script>
+</body>
+</html>

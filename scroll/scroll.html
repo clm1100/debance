@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Document</title>
+<style>
+    *{padding:0;margin:0}
+.content{
+    height:3000px;
+}
+</style>
+</head>
+<body>
+    <div class="content">
+        页面
+    </div>
+<script>
+document.onscroll = function(){
+    console.log("执行频率测试")
+    // 页面总高度:
+    var pageHeight = document.body.scrollHeight;
+    // 显示器高度;
+    var screenHeight = document.documentElement.clientHeight;
+    // 页面被滚动条卷入的高度
+    var scrollHeight = document.documentElement.scrollTop
+    if(scrollHeight+screenHeight>=pageHeight){
+        console.log("加载更多");
+    }
+}    
+</script>
+</body>
+</html>

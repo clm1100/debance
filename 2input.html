@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Document</title>
+</head>
+<body>
+<input type="text" name="" id="inp">
+<script>
+var starttime = Date.now();
+var currenttime = null;
+var timespace = 3000
+// 添加延时器全局变量
+var timeout = null;
+function ajax(){
+    console.log("异步请求,渲染dom")
+}
+document.querySelector("#inp").oninput = function(){
+    currenttime = Date.now();
+    if(currenttime-starttime>timespace){
+        clearTimeout(timeout);
+        starttime = Date.now();
+        timeout = null;
+        ajax()
+    }else{
+        // 判断有无定时器
+        if(!timeout){
+            // 没有定时器的话,打开定时器
+        timeout = setTimeout(function(){
+                ajax();
+                // 调用完成后将timeout清空
+                timeout = null;
+            },4000)
+        }
+    }
+}
+</script>
+</body>
+</html>

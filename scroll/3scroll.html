@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Document</title>
+<style>
+    *{padding:0;margin:0}
+.content{
+    height:3000px;
+}
+</style>
+</head>
+<body>
+    <div class="content">
+        页面
+    </div>
+<script>
+// 抽离计算页面高度，加载更多逻辑
+function more(){
+    console.log("执行频率测试")
+    // 页面总高度:
+    var pageHeight = document.body.scrollHeight;
+    // 显示器高度;
+    var screenHeight = document.documentElement.clientHeight;
+    // 页面被滚动条卷入的高度
+    var scrollHeight = document.documentElement.scrollTop
+    if(scrollHeight+screenHeight>=pageHeight){
+        console.log("加载更多");
+    }
+}
+
+
+document.onscroll = (function debounce(more){
+    var timeout= null;
+    return function(){
+    // 判断是否启动了延时器;
+   if(!timeout){
+    //    未启动，开启延时器
+       timeout = setTimeout(function(){
+           timeout = null;
+           more()
+       },600)
+   }else{
+    //    已经启动,清除延时器,重新计时
+       clearTimeout(timeout);
+       timeout = setTimeout(function(){
+           more()
+       },600)
+   }
+}    
+})(more)
+</script>
+</body>
+</html>

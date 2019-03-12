@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Document</title>
+</head>
+<body>
+<input type="text" name="" id="inp">
+<script>
+function ajax(){
+    console.log("异步请求,渲染dom")
+}
+
+function throttle(callback){
+    var starttime = Date.now();
+    var currenttime = null;
+    var timespace = 3000
+    var timeout = null;    
+    
+    return function(){
+        // 用context和event保存调用事件的this和事件对象
+    var context = this;
+    var event = arguments[0]
+    currenttime = Date.now();
+    if(currenttime-starttime>timespace){
+        clearTimeout(timeout);
+        starttime = Date.now();
+        timeout = null;
+        // 使callback绑定事件调用对象，和事件对象
+        callback.call(context,event)
+    }else{
+        // 判断有无定时器
+        if(!timeout){
+            // 没有定时器的话,打开定时器
+        timeout = setTimeout(function(){
+            // 使callback绑定事件调用对象，和事件对象
+            callback.call(context,event)
+                // 调用完成后将timeout清空
+                timeout = null;
+            },4000)
+        }
+    }
+}
+}
+
+
+document.querySelector("#inp").oninput = throttle(ajax)
+</script>
+</body>
+</html>

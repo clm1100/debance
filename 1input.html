@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Document</title>
+</head>
+<body>
+<input type="text" name="" id="inp">
+<script>
+var starttime = Date.now();
+var currenttime = null;
+var timespace = 3000
+function ajax(){
+    console.log("异步请求,渲染dom")
+}
+document.querySelector("#inp").oninput = function(){
+        currenttime = Date.now();
+    if(currenttime-starttime>timespace){
+        ajax()
+        starttime = Date.now();
+    }else{
+        console.log("不做处理")
+    }
+} 
+</script>
+</body>
+</html>
